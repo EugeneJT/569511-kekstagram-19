@@ -44,7 +44,7 @@ var PHOBOS_MAX = 3;
 var HEAT_MAX = 3;
 var MARVIN_MAX = 100;
 
-var REG_SPECIAL_SYMBOLS = /[^#a-zA-Z0-9]/;
+var REG_SPECIAL_SYMBOLS = /[^#a-zA-Zа-яёА-ЯЁ0-9]+/g;
 var REG_SPACE = /\s+/;
 
 var picturesContainer = document.querySelector('.pictures');
@@ -184,7 +184,7 @@ var validateHashtags = function (value) {
     if (hashtags[z][0] !== HASHTAG) {
       return 'Хэш-тег должен начинаться с #';
     }
-    if (REG_SPECIAL_SYMBOLS.test(hashtags[z])) {
+    if (REG_SPECIAL_SYMBOLS.test(hashtags[z] + 1)) {
       return 'Строка после решётки должна состоять из букв и чисел, и не может содержать пробелы, спецсимволы (#, @, $ и т.п.), символы пунктуации (тире, дефис, запятая и т.п.), эмодзи и т.д.';
     }
     if (hashtags.length === 1 && hashtags[z] === HASHTAG) {
@@ -193,7 +193,7 @@ var validateHashtags = function (value) {
     if (hashtags[z].length > HASHTAG_MAX_LENGTH) {
       return 'Максимальная длина одного хэш-тега 20 символов, включая #';
     }
-    if (hashtags[z].lastIndexOf(HASHTAG) !== 0) {
+    if (hashtags[z].split(HASHTAG).length > 2) {
       return 'Хэш-теги должны быть разделены пробелами';
     }
     var findDuplicateHashtags = hashtags.filter(function (item) {
