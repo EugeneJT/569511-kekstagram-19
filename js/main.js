@@ -55,7 +55,6 @@ var createPhotosArray = function (countPhotos) {
   return array;
 };
 
-var photos = createPhotosArray(PICTURES_NUMBER);
 
 var renderPicture = function (picture) {
   var pictureElement = pictureTemplate.cloneNode(true);
@@ -67,18 +66,12 @@ var renderPicture = function (picture) {
   return pictureElement;
 };
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < photos.length; i++) {
-  fragment.appendChild(renderPicture(photos[i]));
-}
-picturesContainer.appendChild(fragment);
-
-commentsCounter.classList.add('hidden');
-commentsLoader.classList.add('hidden');
+var photos = createPhotosArray(PICTURES_NUMBER);
 
 var openPopupPreview = function () {
   bigPicture.classList.remove('hidden');
   bodyWrap.classList.add('modal-open');
+
 };
 
 var closePopupPreview = function () {
@@ -86,31 +79,41 @@ var closePopupPreview = function () {
   bodyWrap.classList.remove('modal-open');
 };
 
-openPopupPreview();
-closePopupPreview();
+var makeFiledFragment = function (elements, render) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < elements.length; i++) {
+    fragment.appendChild(render(elements[i]));
+  }
+
+  return fragment;
+};
+
 
 var renderComment = function (elem) {
   var newComment = bigPictureComment.cloneNode(true);
   newComment.querySelector('.social__picture').src = elem.avatar;
   newComment.querySelector('.social__picture').alt = elem.name;
   newComment.querySelector('.social__text').textContent = elem.message;
+  bigPictureComments.textContent = '';
+  var fragment = makeFiledFragment(photos, renderPicture);
+  picturesContainer.appendChild(fragment);
   return newComment;
 };
+
 
 var renderBigPicture = function (photo) {
   bigPicture.querySelector('.big-picture__img img').src = photo.url;
   bigPicture.querySelector('.comments-count').textContent = photo.comments.length;
   bigPicture.querySelector('.likes-count').textContent = photo.likes;
   bigPicture.querySelector('.social__caption').textContent = photo.description;
-  createComments(photo.comments);
-  bigPictureComments.textContent = '';
+  var comments = photo.comments;
+  var fragment = makeFiledFragment(comments, renderComment);
   bigPictureComments.appendChild(fragment);
 };
 
-var createComments = function (comments) {
-  for (var j = 0; j < comments.length; j++) {
-    fragment.appendChild(renderComment(comments[j]));
-  }
-};
 
 renderBigPicture(photos[1]);
+
+commentsCounter.classList.add('hidden');
+commentsLoader.classList.add('hidden');
+openPopupPreview();
