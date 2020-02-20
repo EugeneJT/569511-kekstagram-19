@@ -74,10 +74,6 @@ var openPopupPreview = function () {
 
 };
 
-var closePopupPreview = function () {
-  bigPicture.classList.add('hidden');
-  bodyWrap.classList.remove('modal-open');
-};
 
 var makeFiledFragment = function (elements, render) {
   var fragment = document.createDocumentFragment();
