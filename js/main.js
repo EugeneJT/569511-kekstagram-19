@@ -1,15 +1,7 @@
 'use strict';
 
 var NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-
-var MESSAGES = ['Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
-];
-
+var MESSAGES = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 var MIN_LIKES_VALUE = 15;
 var MAX_LIKES_VALUE = 200;
 var MIN_URL_VALUE = 1;
@@ -69,6 +61,11 @@ var effectsRadio = imgUploadOverlay.querySelectorAll('.effects__radio');
 var effectLevelLine = imgUploadOverlay.querySelector('.effect-level__line');
 var imgUploadEffectLevel = imgUploadOverlay.querySelector('.img-upload__effect-level');
 
+var bigPicture = document.querySelector('.big-picture');
+var commentsCounter = document.querySelector('.social__comment-count');
+var commentsLoader = document.querySelector('.comments-loader');
+var bigPictureComment = bigPicture.querySelector('.social__comment');
+var bigPictureComments = bigPicture.querySelector('.social__comments');
 
 var getRandomNum = function (min, max) {
   return Math.floor(min + Math.random() * (max + 1 - min));
@@ -117,11 +114,50 @@ var renderPicture = function (picture) {
   return pictureElement;
 };
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < photos.length; i++) {
-  fragment.appendChild(renderPicture(photos[i]));
-}
-picturesContainer.appendChild(fragment);
+// eslint-disable-next-line no-unused-vars
+var openPopupPreview = function () {
+  bigPicture.classList.remove('hidden');
+  bodyWrap.classList.add('modal-open');
+};
+
+
+var makeFiledFragment = function (elements, render) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < elements.length; i++) {
+    fragment.appendChild(render(elements[i]));
+  }
+
+  return fragment;
+};
+
+
+var renderComment = function (elem) {
+  var newComment = bigPictureComment.cloneNode(true);
+  newComment.querySelector('.social__picture').src = elem.avatar;
+  newComment.querySelector('.social__picture').alt = elem.name;
+  newComment.querySelector('.social__text').textContent = elem.message;
+  bigPictureComments.textContent = '';
+  var fragment = makeFiledFragment(photos, renderPicture);
+  picturesContainer.appendChild(fragment);
+  return newComment;
+};
+
+
+var renderBigPicture = function (photo) {
+  bigPicture.querySelector('.big-picture__img img').src = photo.url;
+  bigPicture.querySelector('.comments-count').textContent = photo.comments.length;
+  bigPicture.querySelector('.likes-count').textContent = photo.likes;
+  bigPicture.querySelector('.social__caption').textContent = photo.description;
+  var comments = photo.comments;
+  var fragment = makeFiledFragment(comments, renderComment);
+  bigPictureComments.appendChild(fragment);
+};
+
+
+renderBigPicture(photos[1]);
+
+commentsCounter.classList.add('hidden');
+commentsLoader.classList.add('hidden');
 
 
 // module4
