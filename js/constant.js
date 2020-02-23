@@ -14,6 +14,7 @@
   var HASHTAGS_MAX_COUNT = 5;
   var HASHTAG = '#';
   var ESC_KEY = 27;
+  var ENTER_KEY = 'Enter';
   var PHOBOS_MAX = 3;
   var HEAT_MAX = 3;
   var MARVIN_MAX = 100;
@@ -39,5 +40,6 @@
     MARVIN_MAX: MARVIN_MAX,
     REG_SPECIAL_SYMBOLS: REG_SPECIAL_SYMBOLS,
     REG_SPACE: REG_SPACE,
+    ENTER_KEY: ENTER_KEY,
   };
 })();

@@ -41,5 +41,6 @@
   window.form = {
     imgUploadOverlay: imgUploadOverlay,
     imgUploadEffectLevel: imgUploadEffectLevel,
+    onPopupEscPress: onPopupEscPress,
   };
 })();
