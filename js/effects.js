@@ -15,7 +15,6 @@
   };
 
   var currentEffect = Effect.NONE;
-  var effectLevelPin = form.imgUploadOverlay.querySelector('.effect-level__pin');
   var effectsRadio = form.imgUploadOverlay.querySelectorAll('.effects__radio');
   var effectLevelLine = form.imgUploadOverlay.querySelector('.effect-level__line');
 
@@ -60,6 +59,31 @@
     effectsRadio[j].addEventListener('change', onEffectChange);
   }
 
-  effectLevelPin.addEventListener('mouseup', onSaturationChange);
+  form.effectLevelPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+    var startCoordsX = evt.clientX;
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+      var shiftX = startCoordsX - moveEvt.clientX;
+      startCoordsX = moveEvt.clientX;
+
+      var newCoordX = form.effectLevelPin.offsetLeft - shiftX;
+      if (newCoordX >= 0 && newCoordX <= effectLevelLine.clientWidth) {
+        form.effectLevelPin.style.left = newCoordX + 'px';
+        form.effectLevelDepth.style.width = newCoordX + 'px';
+        onSaturationChange(evt);
+      }
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
 
 })();

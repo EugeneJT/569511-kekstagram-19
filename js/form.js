@@ -7,6 +7,9 @@
   var uploadCancelModal = document.querySelector('#upload-cancel');
   var imgUploadOverlay = document.querySelector('.img-upload__overlay');
   var imgUploadEffectLevel = imgUploadOverlay.querySelector('.img-upload__effect-level');
+  var effectLevelPin = imgUploadOverlay.querySelector('.effect-level__pin');
+  var effectLevelDepth = imgUploadOverlay.querySelector('.effect-level__depth');
+
 
   var openModal = function () {
     data.bodyWrap.classList.add('modal-open');
@@ -42,5 +45,7 @@
     imgUploadOverlay: imgUploadOverlay,
     imgUploadEffectLevel: imgUploadEffectLevel,
     onPopupEscPress: onPopupEscPress,
+    effectLevelPin: effectLevelPin,
+    effectLevelDepth: effectLevelDepth,
   };
 })();
