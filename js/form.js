@@ -2,7 +2,7 @@
 
 (function () {
   var CONST = window.constants;
-  var data = window.data;
+  var preview = window.preview;
   var uploadFile = document.querySelector('#upload-file');
   var uploadCancelModal = document.querySelector('#upload-cancel');
   var imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -12,14 +12,14 @@
 
 
   var openModal = function () {
-    data.bodyWrap.classList.add('modal-open');
+    preview.bodyWrap.classList.add('modal-open');
     imgUploadOverlay.classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
     imgUploadEffectLevel.classList.add('hidden');
   };
 
   var closeModal = function () {
-    data.bodyWrap.classList.remove('modal-open');
+    preview.bodyWrap.classList.remove('modal-open');
     imgUploadOverlay.classList.add('hidden');
     uploadFile.value = '';
     document.removeEventListener('keydown', onPopupEscPress);
@@ -49,3 +49,5 @@
     effectLevelDepth: effectLevelDepth,
   };
 })();
+
+// Отправка данных + upload
