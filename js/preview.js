@@ -68,7 +68,6 @@
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
-  var createCommentsArray = mock.createCommentsArray;
   var photos = mock.createPhotosArray(CONST.PICTURES_NUMBER);
 
   var showBigPhoto = function (src) {
@@ -110,6 +109,5 @@
     commentsCounter: commentsCounter,
     commentsLoader: commentsLoader,
     makeFiledFragment: makeFiledFragment,
-    createCommentsArray: createCommentsArray,
   };
 })();

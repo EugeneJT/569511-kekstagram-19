@@ -20,6 +20,12 @@
   var MARVIN_MAX = 100;
   var REG_SPECIAL_SYMBOLS = /[^#a-zA-Zа-яёА-ЯЁ0-9]+/g;
   var REG_SPACE = /\s+/;
+  var TIMEOUT_IN_MS = 10000;
+  var GALLERY_URL = 'https://js.dump.academy/kekstagram/data';
+
+  var codeStatus = {
+    OK: 200
+  };
 
   window.constants = {
     NAMES: NAMES,
@@ -41,5 +47,8 @@
     REG_SPECIAL_SYMBOLS: REG_SPECIAL_SYMBOLS,
     REG_SPACE: REG_SPACE,
     ENTER_KEY: ENTER_KEY,
+    TIMEOUT_IN_MS: TIMEOUT_IN_MS,
+    GALLERY_URL: GALLERY_URL,
+    codeStatus: codeStatus
   };
 })();
