@@ -2,7 +2,7 @@
 
 (function () {
   var CONST = window.constants;
-  var mock = window.mock;
+  var gallery = window.gallery;
 
   var picturesContainer = document.querySelector('.pictures');
   var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -68,9 +68,9 @@
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
-  var photos = mock.createPhotosArray(CONST.PICTURES_NUMBER);
 
   var showBigPhoto = function (src) {
+    var photos = gallery.getLoadedData();
     for (var i = 0; i < photos.length; i++) {
       if (src === photos[i].url) {
         openPopupPreview();

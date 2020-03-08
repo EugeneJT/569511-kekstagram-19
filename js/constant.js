@@ -10,6 +10,8 @@
   var MIN_COMMENTS_VALUE = 1;
   var MAX_COMMENTS_VALUE = 5;
   var PICTURES_NUMBER = 25;
+  var PICTURES_RANDOM = 10;
+  var DEBOUNCE_INTERVAL = 500;
   var HASHTAG_MAX_LENGTH = 20;
   var HASHTAGS_MAX_COUNT = 5;
   var HASHTAG = '#';
@@ -23,8 +25,11 @@
   var TIMEOUT_IN_MS = 10000;
   var GALLERY_URL = 'https://js.dump.academy/kekstagram/data';
 
-  var codeStatus = {
-    OK: 200
+  var Code = {
+    SUCCESS: 200,
+    CASHED: 302,
+    NOT_FOUND_ERROR: 404,
+    SERVER_ERROR: 500
   };
 
   window.constants = {
@@ -49,6 +54,8 @@
     ENTER_KEY: ENTER_KEY,
     TIMEOUT_IN_MS: TIMEOUT_IN_MS,
     GALLERY_URL: GALLERY_URL,
-    codeStatus: codeStatus
+    Code: Code,
+    PICTURES_RANDOM: PICTURES_RANDOM,
+    DEBOUNCE_INTERVAL: DEBOUNCE_INTERVAL
   };
 })();
