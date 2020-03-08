@@ -8,7 +8,7 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === CONST.codeStatus.OK) {
+      if (xhr.status === CONST.Code.SUCCESS) {
         onSuccess(xhr.response);
       } else {
         onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
