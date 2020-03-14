@@ -3,12 +3,12 @@
 (function () {
   var CONST = window.constants;
   var gallery = window.gallery;
+  var form = window.form;
 
   var picturesContainer = document.querySelector('.pictures');
   var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   var bigPicture = document.querySelector('.big-picture');
   var bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
-
   var bodyWrap = document.querySelector('body');
   var bigPictureComment = bigPicture.querySelector('.social__comment');
   var bigPictureComments = bigPicture.querySelector('.social__comments');
@@ -43,10 +43,66 @@
     bigPicture.querySelector('.comments-count').textContent = photo.comments.length;
     bigPicture.querySelector('.likes-count').textContent = photo.likes;
     bigPicture.querySelector('.social__caption').textContent = photo.description;
-    var comments = photo.comments;
-    var fragment = makeFiledFragment(comments, renderComment);
-    bigPictureComments.appendChild(fragment);
+    createComments(photo);
   };
+
+  var createComments = function (photo) {
+    for (var i = 0; i < photo.comments.length; i++) {
+      form.fragment.appendChild(renderComment(photo.comments[i]));
+    }
+    bigPictureComments.textContent = '';
+    bigPictureComments.appendChild(form.fragment);
+  };
+
+  var bigPictureCommentCount = bigPicture.querySelector('.social__comment-count');
+  var commentsCountTotal = bigPictureCommentCount.querySelector('.comments-count');
+  var arrayComments = [];
+  var countCommentsRender;
+
+  var getComments = function (comments) {
+    form.fragment = document.createDocumentFragment();
+    var fragmentCommentsCount = document.createDocumentFragment();
+
+    var countComments = comments.length > CONST.COUNT_COMMENTS ? CONST.COUNT_COMMENTS : comments.length;
+    countCommentsRender = countCommentsRender + countComments;
+
+    for (var i = 0; i < countComments; i++) {
+      form.fragment.appendChild(renderComment(comments.shift()));
+    }
+
+    bigPictureCommentCount.textContent = '';
+
+    fragmentCommentsCount.textContent = countCommentsRender + ' из ';
+    fragmentCommentsCount.appendChild(commentsCountTotal);
+    fragmentCommentsCount.innerHtml = fragmentCommentsCount.innerHtml + ' комментариев';
+
+    bigPictureCommentCount.appendChild(fragmentCommentsCount);
+    bigPictureComments.appendChild(form.fragment);
+
+    if (!comments.length) {
+      commentsLoader.classList.add('hidden');
+    }
+  };
+
+  var onLoadMoreComments = function () {
+    getComments(arrayComments);
+  };
+
+  var showComments = function (comments) {
+    arrayComments = comments.slice();
+    countCommentsRender = 0;
+    bigPictureComments.textContent = '';
+    commentsCountTotal.textContent = comments.length + ' комментариев';
+
+    if (comments.length > CONST.COUNT_COMMENTS) {
+      commentsLoader.classList.remove('hidden');
+      bigPictureCommentCount.classList.remove('hidden');
+    }
+
+    getComments(arrayComments);
+  };
+
+  commentsLoader.addEventListener('click', onLoadMoreComments);
 
 
   var onPopupEscPress = document.addEventListener('keydown', function (evt) {
@@ -68,6 +124,28 @@
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
+  /*
+  var showBigPhoto = function (photoIndex) {
+    var photos = gallery.getLoadedData();
+    openPopupPreview();
+    renderBigPicture(photos[photoIndex]);
+  };
+
+  var onPictureClick = function (evt) {
+    if (evt.target.tagName.toLowerCase() === 'img') {
+      var activePicture = evt.target.dataset.id;
+      showBigPhoto(activePicture);
+    }
+  };
+
+  var onPictureEnterPress = function (evt) {
+    if (evt.keyCode === CONST.ENTER_KEY) {
+      var activePicture = evt.target.children[0].dataset.id;
+      showBigPhoto(activePicture);
+    }
+  };
+  */
+
 
   var showBigPhoto = function (src) {
     var photos = gallery.getLoadedData();
@@ -75,6 +153,7 @@
       if (src === photos[i].url) {
         openPopupPreview();
         renderBigPicture(photos[i]);
+        showComments(photos[i].comments);
       }
     }
   };
@@ -106,8 +185,6 @@
     bodyWrap: bodyWrap,
     bigPictureComment: bigPictureComment,
     bigPictureComments: bigPictureComments,
-    commentsCounter: commentsCounter,
-    commentsLoader: commentsLoader,
     makeFiledFragment: makeFiledFragment,
   };
 })();

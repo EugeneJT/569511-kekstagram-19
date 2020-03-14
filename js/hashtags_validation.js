@@ -7,6 +7,12 @@
 
   var validateHashtags = function (value) {
     var hashtags = value.toLowerCase().trim().split(CONST.REG_SPACE);
+    if (hashtags.length > CONST.HASHTAGS_MAX_COUNT) {
+      return 'Нельзя указать больше пяти хэш-тегов';
+    }
+    if (!value) {
+      return '';
+    }
     for (var z = 0; z < hashtags.length; z++) {
       if (hashtags[z][0] !== CONST.HASHTAG) {
         return 'Хэш-тег должен начинаться с #';
@@ -29,9 +35,6 @@
       if (findDuplicateHashtags.length > 1) {
         return 'Один и тот же хэш-тег не может быть использован дважды';
       }
-    }
-    if (hashtags.length > CONST.HASHTAGS_MAX_COUNT) {
-      return 'Нельзя указать больше пяти хэш-тегов';
     }
     return '';
   };

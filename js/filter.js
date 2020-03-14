@@ -9,25 +9,21 @@
   var filterRandom = document.querySelector('#filter-random');
   var filterDiscussed = document.querySelector('#filter-discussed');
 
-  var debounce = function (cb) {
-    var lastTimeout = null;
-
-    return function () {
-      var parameters = arguments;
-      if (lastTimeout) {
-        window.clearTimeout(lastTimeout);
-      }
-      lastTimeout = window.setTimeout(function () {
-        cb.apply(null, parameters);
-      }, CONST.DEBOUNCE_INTERVAL);
-    };
-  };
-
-
-  filterDefault.addEventListener('click', debounce(function () {
+  var removePreview = function () {
     document.querySelectorAll('.picture').forEach(function (item) {
       item.remove();
     });
+  };
+
+
+  filterDefault.addEventListener('click', utils.debounce(function () {
+    removePreview();
+
+    /*
+    var filterButtons = document.querySelectorAll('.img-filters__button');
+    var setActiveFilterButton = function (activElement) {};
+    */
+
     filterDefault.classList.add('img-filters__button--active');
     filterRandom.classList.remove('img-filters__button--active');
     filterDiscussed.classList.remove('img-filters__button--active');
@@ -35,11 +31,8 @@
   }));
 
 
-  filterRandom.addEventListener('click', debounce(function () {
-    document.querySelectorAll('.picture').forEach(function (item) {
-
-      item.remove();
-    });
+  filterRandom.addEventListener('click', utils.debounce(function () {
+    removePreview();
     filterDefault.classList.remove('img-filters__button--active');
     filterRandom.classList.add('img-filters__button--active');
     filterDiscussed.classList.remove('img-filters__button--active');
@@ -48,11 +41,8 @@
     );
   }));
 
-  filterDiscussed.addEventListener('click', debounce(function () {
-    document.querySelectorAll('.picture').forEach(function (item) {
-
-      item.remove();
-    });
+  filterDiscussed.addEventListener('click', utils.debounce(function () {
+    removePreview();
     filterDefault.classList.remove('img-filters__button--active');
     filterRandom.classList.remove('img-filters__button--active');
     filterDiscussed.classList.add('img-filters__button--active');
