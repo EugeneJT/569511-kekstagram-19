@@ -29,7 +29,6 @@
   var DEFAULT_EFFECT_DEPTH = 100 + '%';
   var COUNT_COMMENTS = 5;
 
-
   var Scale = {
     MIN: 25,
     MAX: 100,
