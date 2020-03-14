@@ -1,6 +1,21 @@
 'use strict';
 
 (function () {
+  var CONST = window.constants;
+
+  var debounce = function (cb) {
+    var lastTimeout = null;
+
+    return function () {
+      var parameters = arguments;
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        cb.apply(null, parameters);
+      }, CONST.DEBOUNCE_INTERVAL);
+    };
+  };
 
   var shuffleArray = function (array) {
     var copy = array.slice();
@@ -34,6 +49,7 @@
   window.utils = {
     getRandomNum: getRandomNum,
     shuffleArray: shuffleArray,
-    sortObjectsArrayByField: sortObjectsArrayByField
+    sortObjectsArrayByField: sortObjectsArrayByField,
+    debounce: debounce
   };
 })();

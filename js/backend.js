@@ -28,7 +28,7 @@
   };
 
   window.upload = function (data, onSuccess) {
-    var URL = 'https://js.dump.academy/kekstagram';
+    var URL = CONST.KEKSTAGRAM_URL;
 
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';

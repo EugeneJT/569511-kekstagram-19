@@ -24,6 +24,18 @@
   var REG_SPACE = /\s+/;
   var TIMEOUT_IN_MS = 10000;
   var GALLERY_URL = 'https://js.dump.academy/kekstagram/data';
+  var KEKSTAGRAM_URL = 'https://js.dump.academy/kekstagram';
+  var DEFAULT_EFFECT_PIN = 100 + '%';
+  var DEFAULT_EFFECT_DEPTH = 100 + '%';
+  var COUNT_COMMENTS = 5;
+
+
+  var Scale = {
+    MIN: 25,
+    MAX: 100,
+    DEFAULT: 100,
+    STEP: 25
+  };
 
   var Code = {
     SUCCESS: 200,
@@ -55,7 +67,12 @@
     TIMEOUT_IN_MS: TIMEOUT_IN_MS,
     GALLERY_URL: GALLERY_URL,
     Code: Code,
+    Scale: Scale,
     PICTURES_RANDOM: PICTURES_RANDOM,
-    DEBOUNCE_INTERVAL: DEBOUNCE_INTERVAL
+    DEBOUNCE_INTERVAL: DEBOUNCE_INTERVAL,
+    DEFAULT_EFFECT_PIN: DEFAULT_EFFECT_PIN,
+    DEFAULT_EFFECT_DEPTH: DEFAULT_EFFECT_DEPTH,
+    KEKSTAGRAM_URL: KEKSTAGRAM_URL,
+    COUNT_COMMENTS: COUNT_COMMENTS
   };
 })();
