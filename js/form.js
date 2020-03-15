@@ -15,7 +15,8 @@
   var bodyWrap = document.querySelector('body');
   var main = document.querySelector('main');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-
+  var imgUploadPreview = document.querySelector('.img-upload__preview');
+  var scaleControlValue = document.querySelector('.scale__control--value');
 
   var openModal = function () {
     bodyWrap.classList.add('modal-open');
@@ -32,10 +33,6 @@
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
-  var imgUploadPreview = document.querySelector('.img-upload__preview');
-  var scaleControlValue = document.querySelector('.scale__control--value');
-
-
   var setDefaultValues = function () {
     effectLevelPin.style.left = CONST.DEFAULT_EFFECT_PIN;
     effectLevelDepth.style.width = CONST.DEFAULT_EFFECT_DEPTH;
@@ -45,14 +42,6 @@
     textHashtags.value = '';
     textDescription.value = '';
   };
-
-  textHashtags.addEventListener('focusin', function () {
-    document.removeEventListener('keydown', onPopupEscPress);
-  });
-
-  textHashtags.addEventListener('focusout', function () {
-    document.addEventListener('keydown', onPopupEscPress);
-  });
 
   uploadFile.addEventListener('change', function (evt) {
     evt.preventDefault();
@@ -64,7 +53,8 @@
   });
 
   var onPopupEscPress = document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === CONST.ESC_KEY) {
+    var activeElem = document.activeElement;
+    if (evt.keyCode === CONST.ESC_KEY && !(activeElem === textHashtags || activeElem === textDescription)) {
       closeModal();
     }
   });

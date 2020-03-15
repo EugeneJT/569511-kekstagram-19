@@ -42,5 +42,4 @@
   textHashtags.addEventListener('input', function (evt) {
     textHashtags.setCustomValidity(validateHashtags(evt.target.value));
   });
-
 })();

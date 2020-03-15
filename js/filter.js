@@ -4,7 +4,6 @@
   var gallery = window.gallery;
   var CONST = window.constants;
   var utils = window.utils;
-
   var filterDefault = document.querySelector('#filter-default');
   var filterRandom = document.querySelector('#filter-random');
   var filterDiscussed = document.querySelector('#filter-discussed');
@@ -15,14 +14,8 @@
     });
   };
 
-
   filterDefault.addEventListener('click', utils.debounce(function () {
     removePreview();
-
-    /*
-    var filterButtons = document.querySelectorAll('.img-filters__button');
-    var setActiveFilterButton = function (activElement) {};
-    */
 
     filterDefault.classList.add('img-filters__button--active');
     filterRandom.classList.remove('img-filters__button--active');

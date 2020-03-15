@@ -39,5 +39,4 @@
     createPhotosArray: createPhotosArray,
     createCommentsArray: createCommentsArray,
   };
-
 })();
