@@ -33,14 +33,6 @@
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
-  textHashtags.addEventListener('focusin', function () {
-    document.removeEventListener('keydown', onPopupEscPress);
-  });
-
-  textHashtags.addEventListener('focusout', function () {
-    document.addEventListener('keydown', onPopupEscPress);
-  });
-
   var setDefaultValues = function () {
     effectLevelPin.style.left = CONST.DEFAULT_EFFECT_PIN;
     effectLevelDepth.style.width = CONST.DEFAULT_EFFECT_DEPTH;
@@ -61,7 +53,8 @@
   });
 
   var onPopupEscPress = document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === CONST.ESC_KEY) {
+    var activeElem = document.activeElement;
+    if (evt.keyCode === CONST.ESC_KEY && !(activeElem === textHashtags || activeElem === textDescription)) {
       closeModal();
     }
   });

@@ -38,9 +38,6 @@
 
   var Code = {
     SUCCESS: 200,
-    CASHED: 302,
-    NOT_FOUND_ERROR: 404,
-    SERVER_ERROR: 500
   };
 
   window.constants = {

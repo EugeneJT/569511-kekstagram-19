@@ -35,14 +35,14 @@
   var countCommentsRender;
 
   var getComments = function (comments) {
-    form.fragment = document.createDocumentFragment();
+    var fragment = document.createDocumentFragment();
     var fragmentCommentsCount = document.createDocumentFragment();
 
     var countComments = comments.length > CONST.COUNT_COMMENTS ? CONST.COUNT_COMMENTS : comments.length;
     countCommentsRender = countCommentsRender + countComments;
 
     for (var i = 0; i < countComments; i++) {
-      form.fragment.appendChild(renderComment(comments.shift()));
+      fragment.appendChild(renderComment(comments.shift()));
     }
 
     bigPictureCommentCount.textContent = '';
@@ -52,7 +52,7 @@
     fragmentCommentsCount.innerHtml = fragmentCommentsCount.innerHtml + ' комментариев';
 
     bigPictureCommentCount.appendChild(fragmentCommentsCount);
-    bigPictureComments.appendChild(form.fragment);
+    bigPictureComments.appendChild(fragment);
 
     if (!comments.length) {
       commentsLoader.classList.add('hidden');
@@ -68,6 +68,7 @@
     countCommentsRender = 0;
     bigPictureComments.textContent = '';
     commentsCountTotal.textContent = comments.length + ' комментариев';
+
 
     if (comments.length > CONST.COUNT_COMMENTS) {
       commentsLoader.classList.remove('hidden');
