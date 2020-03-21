@@ -19,7 +19,6 @@
     newComment.querySelector('.social__picture').src = elem.avatar;
     newComment.querySelector('.social__picture').alt = elem.name;
     newComment.querySelector('.social__text').textContent = elem.message;
-    bigPictureComments.textContent = '';
     return newComment;
   };
 
@@ -46,8 +45,7 @@
     }
 
     bigPictureCommentCount.textContent = '';
-
-    fragmentCommentsCount.textContent = countCommentsRender + ' из ';
+    fragmentCommentsCount.textContent = 'Просмотрено ' + countCommentsRender + ' из ';
     fragmentCommentsCount.appendChild(commentsCountTotal);
     fragmentCommentsCount.innerHtml = fragmentCommentsCount.innerHtml + ' комментариев';
 

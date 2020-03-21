@@ -4,7 +4,7 @@
   var CONST = window.constants;
   var imgUploadScale = document.querySelector('.img-upload__scale');
   var imgUploadOverlay = document.querySelector('.img-upload__overlay');
-  var imgUploadPreview = imgUploadOverlay.querySelector('.img-upload__preview');
+  var imgUploadPreview = imgUploadOverlay.querySelector('.img-upload__preview').querySelector('img');
   var scaleControlSmaller = imgUploadScale.querySelector('.scale__control--smaller');
   var scaleControlBigger = imgUploadScale.querySelector('.scale__control--bigger');
   var scaleControlValue = imgUploadScale.querySelector('.scale__control--value');

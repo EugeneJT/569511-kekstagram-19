@@ -2,7 +2,6 @@
 
 (function () {
   var CONST = window.constants;
-  var gallery = window.gallery;
   var comments = window.comments;
   var picturesContainer = document.querySelector('.pictures');
   var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -24,6 +23,7 @@
     bigPicture.querySelector('.comments-count').textContent = photo.comments.length;
     bigPicture.querySelector('.likes-count').textContent = photo.likes;
     bigPicture.querySelector('.social__caption').textContent = photo.description;
+    bigPicture.querySelector('.social__comments').textContent = '';
     comments.createComments(photo);
   };
 
@@ -45,27 +45,23 @@
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
-  var showBigPhoto = function (src) {
-    var photos = gallery.getLoadedData();
-    for (var i = 0; i < photos.length; i++) {
-      if (src === photos[i].url) {
-        openPopupPreview();
-        renderBigPicture(photos[i]);
-        comments.showComments(photos[i].comments);
-      }
-    }
+  var showBigPhoto = function (photoIndex) {
+    var photos = window.dataPictures;
+    openPopupPreview();
+    renderBigPicture(photos[photoIndex]);
+    comments.showComments(photos[photoIndex].comments);
   };
 
   var onPictureClick = function (evt) {
     if (evt.target.tagName.toLowerCase() === 'img') {
-      var activePicture = evt.target.attributes.src.value;
+      var activePicture = evt.target.dataset.id;
       showBigPhoto(activePicture);
     }
   };
 
   var onPictureEnterPress = function (evt) {
-    if (evt.key === CONST.ENTER_KEY) {
-      var activePicture = evt.target.children[0].attributes.src.value;
+    if (evt.keyCode === CONST.ENTER_KEY) {
+      var activePicture = evt.target.children[0].dataset.id;
       showBigPhoto(activePicture);
     }
   };

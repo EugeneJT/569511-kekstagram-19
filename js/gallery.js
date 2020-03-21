@@ -6,8 +6,9 @@
   var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   var imgFilters = document.querySelector('.img-filters');
 
-  var renderPicture = function (picture) {
+  var renderPicture = function (picture, index) {
     var pictureElement = pictureTemplate.cloneNode(true);
+    pictureElement.querySelector('.picture__img').dataset.id = index;
 
     pictureElement.querySelector('.picture__img').src = picture.url;
     pictureElement.querySelector('.picture__likes').textContent = picture.likes + '';
@@ -19,27 +20,25 @@
   var renderFragment = function (photos) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < photos.length; i++) {
-      fragment.appendChild(renderPicture(photos[i]));
+      fragment.appendChild(renderPicture(photos[i], i));
     }
     picturesContainer.appendChild(fragment);
   };
 
-  var loadedData = [];
-
-  var successHandler = function (photos) {
-    loadedData = photos;
-    renderFragment(loadedData);
+  var onSuccess = function (photos) {
+    window.dataPictures = photos.slice();
+    renderFragment(window.dataPictures);
     imgFilters.classList.remove('img-filters--inactive');
   };
 
   var getLoadedData = function () {
-    return loadedData;
+    return window.dataPictures;
   };
 
-  window.load(successHandler, form.errorHandler);
+  window.load(onSuccess, form.onError);
 
   window.gallery = {
     getLoadedData: getLoadedData,
-    renderFragment: renderFragment
+    renderFragment: renderFragment,
   };
 })();
