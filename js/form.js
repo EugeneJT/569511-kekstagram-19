@@ -15,7 +15,8 @@
   var bodyWrap = document.querySelector('body');
   var main = document.querySelector('main');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-
+  var imgUploadPreview = document.querySelector('.img-upload__preview');
+  var scaleControlValue = document.querySelector('.scale__control--value');
 
   var openModal = function () {
     bodyWrap.classList.add('modal-open');
@@ -32,10 +33,6 @@
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
-  var imgUploadPreview = document.querySelector('.img-upload__preview');
-  var scaleControlValue = document.querySelector('.scale__control--value');
-
-
   var setDefaultValues = function () {
     effectLevelPin.style.left = CONST.DEFAULT_EFFECT_PIN;
     effectLevelDepth.style.width = CONST.DEFAULT_EFFECT_DEPTH;
@@ -45,14 +42,6 @@
     textHashtags.value = '';
     textDescription.value = '';
   };
-
-  textHashtags.addEventListener('focusin', function () {
-    document.removeEventListener('keydown', onPopupEscPress);
-  });
-
-  textHashtags.addEventListener('focusout', function () {
-    document.addEventListener('keydown', onPopupEscPress);
-  });
 
   uploadFile.addEventListener('change', function (evt) {
     evt.preventDefault();
@@ -64,12 +53,13 @@
   });
 
   var onPopupEscPress = document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === CONST.ESC_KEY) {
+    var activeElem = document.activeElement;
+    if (evt.keyCode === CONST.ESC_KEY && !(activeElem === textHashtags || activeElem === textDescription)) {
       closeModal();
     }
   });
 
-  var uploadSuccessHandler = function () {
+  var onSuccessUpload = function () {
     var successTemplate = document.querySelector('#success').content.querySelector('.success');
     var newSuccess = successTemplate.cloneNode(true);
     fragment.appendChild(newSuccess);
@@ -99,7 +89,7 @@
     }
   };
 
-  var errorHandler = function (errorMessage) {
+  var onError = function (errorMessage) {
     var newError = errorTemplate.cloneNode(true);
     newError.querySelector('.error__title').textContent = errorMessage;
     fragment.appendChild(newError);
@@ -129,7 +119,7 @@
   };
 
   uploadForm.addEventListener('submit', function (evt) {
-    window.upload(new FormData(uploadForm), uploadSuccessHandler, errorHandler);
+    window.upload(new FormData(uploadForm), onSuccessUpload, onError);
     evt.preventDefault();
   });
 
@@ -141,6 +131,6 @@
     effectLevelPin: effectLevelPin,
     effectLevelDepth: effectLevelDepth,
     fragment: fragment,
-    errorHandler: errorHandler
+    onError: onError,
   };
 })();
